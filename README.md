@@ -2,6 +2,17 @@
 
 Helidon Assistant is a Retrieval-Augmented Generation (RAG) application built around Helidon's documentation. It provides a friendly AI chat interface to help answer Helidon-related questions.
 
+Key Features:
+
+- **Smart AsciiDoc Processing**: Special handling of AsciiDoc content during embedding creation, including:
+    - Clean conversion to plain text.
+    - Grouping by document sections.
+    - Preserving code snippets and tables as meaningful units.
+- **Metadata Preservation**: Embeddings retain rich metadata such as:
+    - Document name.
+    - Section and position within the document.
+- **Stateless Backend**: Conversations are summarized on the server and stored client-side for a lightweight, scalable experience.
+
 ## Getting Started
 
 ### 1. Clone the Helidon Documentation
@@ -37,4 +48,6 @@ java -jar target/helidon-assistant.jar
 
 ### 5. Chat with the Assistant
 
-Open your browser and start chatting with the Helidon Assistant to get helpful insights and answers related to the Helidon framework.
+Once the application is running, open your browser and navigate to [http://localhost:8080](http://localhost:8080) to start chatting with the Helidon Assistant.
+
+Use the chat interface to ask questions and get helpful insights based on Helidon's official documentation.
