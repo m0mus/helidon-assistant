@@ -22,5 +22,5 @@ langchain4j:
       embedding-store: "@default"
 
 app:
-  root: "/home/daniel/idp/ora/helidon/helidon-4/docs/src/main/asciidoc/mp"
+  root: "/home/daniel/idp/ora/helidon/helidon-4/docs/src/main/asciidoc"
   inclusions: "*.adoc"

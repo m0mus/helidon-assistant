@@ -5,13 +5,13 @@ DIR=$(pwd)
 cd /tmp
 git clone -b kec/oci-genai-model --single-branch git@github.com:danielkec/langchain4j.git
 cd langchain4j
-mvn install -DskipTests -Dmaven.test.skip=true -Dspotless.check.skip=true -Dmaven.javadoc.skip=true
+mvn install -T4 -DskipTests -DskipITs -Dspotless.check.skip=true -Dmaven.javadoc.skip=true
 
 # Helidon 4 with Oracle GenAI integration LangChain4J POC snapshot build:
 cd /tmp
 git clone -b kec/lc4j-oci-genai --single-branch git@github.com:danielkec/helidon.git
 cd helidon
-mvn install -DskipTests -Dmaven.test.skip=true
+mvn install -T4 -DskipTests -Dmaven.javadoc.skip=true
 
 
 cd ${DIR}
