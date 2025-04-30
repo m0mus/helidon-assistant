@@ -60,6 +60,10 @@ public class DocsIngestor {
                 segments.add(TextSegment.from(chunk.text(), metadata));
             }
 
+            if (segments.isEmpty()) {
+                continue;
+            }
+
             // Embed the segments
             var embeddings = embeddingModel.embedAll(segments);
 
