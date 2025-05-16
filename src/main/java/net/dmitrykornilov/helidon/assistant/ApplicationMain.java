@@ -1,16 +1,15 @@
 package net.dmitrykornilov.helidon.assistant;
 
+import io.helidon.common.config.Config;
 import io.helidon.http.Header;
 import io.helidon.http.HeaderNames;
 import io.helidon.http.HeaderValues;
-
-import io.helidon.common.config.Config;
 import io.helidon.http.Status;
 import io.helidon.logging.common.LogConfig;
 import io.helidon.service.registry.Services;
-import io.helidon.webserver.WebServer;
+import io.helidon.webserver.WebServerConfig;
 import io.helidon.webserver.http.HttpRouting;
-import io.helidon.webserver.staticcontent.StaticContentService;
+import io.helidon.webserver.staticcontent.StaticContentFeature;
 
 import net.dmitrykornilov.helidon.assistant.rag.DocsIngestor;
 import net.dmitrykornilov.helidon.assistant.rest.ChatBotService;
@@ -29,7 +28,16 @@ public class ApplicationMain {
         Services.get(DocsIngestor.class)
                 .ingest();
 
-        WebServer.builder()
+        // Static content setup
+        var staticContentFeature = StaticContentFeature.builder()
+                .addClasspath(cl -> cl.location("WEB")
+                        .context("/ui")
+                        .welcome("index.html"))
+                .build();
+
+        // Initialize and start web server
+        WebServerConfig.builder()
+                .addFeature(staticContentFeature)
                 .config(config.get("server"))
                 .routing(ApplicationMain::routing)
                 .build()
@@ -46,9 +54,6 @@ public class ApplicationMain {
                     res.headers().set(UI_REDIRECT);
                     res.send();
                 })
-                .register("/chat", Services.get(ChatBotService.class))
-                .register("/ui", StaticContentService.builder("WEB")
-                        .welcomeFileName("index.html")
-                        .build());
+                .register("/chat", Services.get(ChatBotService.class));
     }
 }
