@@ -4,9 +4,9 @@ import io.helidon.integrations.langchain4j.Ai;
 
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
-import dev.langchain4j.service.V;
 
 @Ai.Service
+@Ai.ChatMemoryWindow(value=3,store="ChatMemoryStore")
 public interface ChatAiService {
 
     @SystemMessage("""
@@ -14,9 +14,6 @@ public interface ChatAiService {
             
             Only answer questions related to Helidon and its components. If a question is not relevant to Helidon, 
             politely decline.
-            
-            Use the following conversation summary to keep context and maintain continuity:
-            {(summary})
             """)
-    String chat(@UserMessage String question, @V("summary") String previousConversationSummary);
+    String chat(@UserMessage String question);
 }

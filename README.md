@@ -43,7 +43,7 @@ mvn clean package
 Launch the assistant with:
 
 ```bash
-java -jar target/helidon-assistant.jar
+java -Dcoherence.wka=127.0.0.1 -jar target/helidon-assistant.jar
 ```
 
 ### 5. Chat with the Assistant

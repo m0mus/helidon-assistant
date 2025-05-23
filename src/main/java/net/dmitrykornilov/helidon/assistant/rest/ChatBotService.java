@@ -37,14 +37,14 @@ public class ChatBotService implements HttpService {
     private void chatWithAssistant(ServerRequest req, ServerResponse res) {
         var json = req.content().as(JsonObject.class);
         var message = json.getString("message");
-        var summary = json.getString("summary");
+        //var summary = json.getString("summary");
 
-        var answer = chatAiService.chat(message, summary);
-        var updatedSummary = summaryAiService.chat(summary, message, answer);
+        var answer = chatAiService.chat(message);
+        //var updatedSummary = summaryAiService.chat(summary, message, answer);
 
         var returnObject = JSON.createObjectBuilder()
                 .add("message", answer)
-                .add("summary", updatedSummary)
+                //.add("summary", updatedSummary)
                 .build();
         res.send(returnObject);
     }
