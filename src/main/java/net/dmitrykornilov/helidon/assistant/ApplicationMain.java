@@ -14,6 +14,8 @@ import io.helidon.webserver.staticcontent.StaticContentFeature;
 import net.dmitrykornilov.helidon.assistant.rag.DocsIngestor;
 import net.dmitrykornilov.helidon.assistant.rest.ChatBotService;
 
+import com.tangosol.net.Coherence;
+
 public class ApplicationMain {
 
     private static final Header UI_REDIRECT = HeaderValues.createCached(HeaderNames.LOCATION, "/ui");
@@ -23,6 +25,13 @@ public class ApplicationMain {
         LogConfig.configureRuntime();
 
         var config = Services.get(Config.class);
+
+        //In case of MP, the coherence-cdi-server will do this for us.
+        try {
+            Coherence.clusterMember().startAndWait();
+        } catch (java.lang.Exception e) {
+            throw new RuntimeException(e);
+        }
 
         // Initialize embedding store
         Services.get(DocsIngestor.class)
